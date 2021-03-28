@@ -21,6 +21,7 @@ export default class App extends React.Component {
             <div>
                 <h1>Weather</h1>
                 <h3>{this.state.slogan}</h3>
+                <LocationSelect />
             </div>
         )
     }
