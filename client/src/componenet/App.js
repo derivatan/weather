@@ -1,5 +1,6 @@
 import React from "react"
 import axios from "axios"
+import LocationSelect from "./LocationSelect";
 
 export default class App extends React.Component {
 
@@ -8,12 +9,10 @@ export default class App extends React.Component {
         this.state = {
             slogan: ""
         }
-        axios.get('http://localhost:5000').then(data => {
+        axios.get(global.serverURL).then(data => {
             this.setState({
                 slogan: data.data
             })
-        }).catch(error => {
-            console.log(error)
         })
     }
 
