@@ -21,7 +21,7 @@ export default class LocationSelect extends React.Component {
     }
 
     render() {
-        const options = [<option value="">-</option>]
+        const options = [<option key="-1" value="">-</option>]
         this.state.locations.forEach((location, i) => {
             options.push(<option key={location.Id} value={location.Id}>{location.Name}</option>)
         })
