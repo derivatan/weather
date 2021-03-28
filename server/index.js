@@ -45,7 +45,10 @@ app.get('/forecast/:locationId', (request, response) => {
     const location = filteredLocations[0]
 
     axios.get('https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/' + location.lng + '/lat/' + location.lat + '/data.json').then(data => {
-        response.send(data.data)
+        response.json({
+            location: location,
+            rawData: data.data
+        })
     }).catch(error => {
         console.log(error)
     })
