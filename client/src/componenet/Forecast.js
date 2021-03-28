@@ -7,9 +7,16 @@ export default class Forecast extends React.Component {
     }
 
     render() {
+        let name = ""
+        if (this.props.data !== null) {
+            name = this.props.data.location.Name
+        }
+
+        // TODO render the data here.
+
         return (
             <div>
-                This is a forecast for {this.props.location}
+                <h3>{name}</h3>
             </div>
         )
     }

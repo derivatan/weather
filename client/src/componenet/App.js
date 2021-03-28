@@ -9,17 +9,19 @@ export default class App extends React.Component {
         super(props)
         this.state = {
             slogan: "",
-            location: "",
+            forecastData: null,
         }
-        axios.get(global.serverURL).then(data => {
-            this.setState({slogan: data.data})
+        axios.get(global.serverURL).then(response => {
+            this.setState({slogan: response.data})
         })
 
         this.setLocation = this.setLocation.bind(this)
     }
 
     setLocation(locationId) {
-        this.setState({location: locationId})
+        axios.get(global.serverURL + "/forecast/" + locationId).then(response => {
+            this.setState({forecastData: response.data})
+        })
     }
 
     render() {
@@ -28,7 +30,7 @@ export default class App extends React.Component {
                 <h1>Weather</h1>
                 <h3>{this.state.slogan}</h3>
                 <LocationSelect setLocation={this.setLocation}/>
-                <Forecast location={this.state.location}/>
+                <Forecast data={this.state.forecastData}/>
             </div>
         )
     }
