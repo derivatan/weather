@@ -1,5 +1,6 @@
 const express = require('express')
-app = express()
+const axios = require('axios')
+const app = express()
 
 // TODO: These values should typically be more suitable place, like a database.
 const locations = [
@@ -26,6 +27,27 @@ app.get('/', (request, response) => {
 app.get('/locations', (request, response) => {
     response.json({
         locations: locations
+    })
+})
+
+app.get('/forecast/:locationId', (request, response) => {
+    const locationId = parseInt(request.params.locationId)
+    if (isNaN(locationId)) {
+        response.status(400).send("LocationID must be an int")
+        return
+    }
+
+    const filteredLocations = locations.filter(l => l.Id === locationId)
+    if (filteredLocations.length !== 1) {
+        response.status(404).send("Location not found")
+        return
+    }
+    const location = filteredLocations[0]
+
+    axios.get('https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/' + location.lng + '/lat/' + location.lat + '/data.json').then(data => {
+        response.send(data.data)
+    }).catch(error => {
+        console.log(error)
     })
 })
 
